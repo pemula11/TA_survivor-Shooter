@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwsg5mn0a64q0"]
+
+[ext_resource type="PackedScene" uid="uid://cridc2gxsiypr" path="res://src/Object/Weapon/weapon.tscn" id="1_r3ayj"]
+[ext_resource type="Texture2D" uid="uid://cy4qbridpgxo1" path="res://asset/Weapons/Weapons/weaponR2.png" id="2_588y7"]
+
+[node name="Pistol" instance=ExtResource("1_r3ayj")]
+weapon_name = "pistol"
+BULLET_SPEED = 200.0
+SHOOT_RAGE = 800.0
+BULLETS = 2
+slot = 8
+max_slot = 8
+ammo = 50
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_588y7")

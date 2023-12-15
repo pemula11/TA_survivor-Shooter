@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch3vf68w3m5cl"]
+
+[ext_resource type="PackedScene" uid="uid://cridc2gxsiypr" path="res://src/Object/Weapon/weapon.tscn" id="1_edtni"]
+
+[node name="Automatic Rifle" instance=ExtResource("1_edtni")]
+weapon_name = "AR"
+BULLETS = 3
+slot = 30
+max_slot = 40
+ammo = 90
