@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dvf8payshbe77"]
+[gd_scene load_steps=29 format=3 uid="uid://dvf8payshbe77"]
 
 [ext_resource type="PackedScene" uid="uid://blu1pprn7m7tw" path="res://src/Actor/actor.tscn" id="1_6bkwe"]
 [ext_resource type="Script" path="res://src/Actor/Enemy/enemy.gd" id="2_b8aly"]
@@ -21,9 +21,11 @@
 [ext_resource type="Script" path="res://src/Actor/Enemy/Chase.gd" id="20_qmmwg"]
 [ext_resource type="Script" path="res://src/Actor/Enemy/EnemyMoveComponent.gd" id="20_wwyrh"]
 [ext_resource type="Script" path="res://src/Actor/Enemy/TargetDetector.gd" id="21_p6glv"]
+[ext_resource type="PackedScene" uid="uid://bjgpjj6m73twf" path="res://src/Actor/misc/hibox.tscn" id="22_c88ne"]
+[ext_resource type="PackedScene" uid="uid://icst6s0xk2el" path="res://src/Actor/misc/hurtbox.tscn" id="23_0oqr6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ltmln"]
-size = Vector2(12, 20)
+size = Vector2(12, 15.3307)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yvghp"]
 animations = [{
@@ -80,6 +82,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hkfsp"]
+radius = 13.04
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_74645"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iqfdn"]
+size = Vector2(400, 400)
+
 [node name="Enemy" groups=["enemy"] instance=ExtResource("1_6bkwe")]
 collision_layer = 4
 collision_mask = 15
@@ -87,6 +97,7 @@ motion_mode = 1
 script = ExtResource("2_b8aly")
 max_patrol = 200
 max_target_seen = 200
+max_target_detactor = 100
 SPEED = 80.0
 
 [node name="CollisionShape2D" parent="." index="0"]
@@ -121,8 +132,9 @@ script = ExtResource("20_wwyrh")
 wait_time = 0.5
 autostart = true
 
-[node name="TargetDetector" type="Node" parent="AI" index="1"]
+[node name="TargetManager" type="Node" parent="AI" index="1" node_paths=PackedStringArray("target_detector")]
 script = ExtResource("21_p6glv")
+target_detector = NodePath("")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="4"]
 path_postprocessing = 1
@@ -141,4 +153,34 @@ offset_bottom = -21.0
 text = "idle"
 horizontal_alignment = 1
 
+[node name="Hibox" parent="." index="7" instance=ExtResource("22_c88ne")]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hibox" index="0"]
+position = Vector2(-2, -5)
+shape = SubResource("CircleShape2D_hkfsp")
+
+[node name="hurtbox" parent="." index="8" instance=ExtResource("23_0oqr6")]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="hurtbox" index="0"]
+position = Vector2(-1, -5)
+shape = SubResource("CircleShape2D_74645")
+
+[node name="TargetDetector" type="Area2D" parent="." index="9"]
+visible = false
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector" index="0"]
+position = Vector2(200, 2)
+shape = SubResource("RectangleShape2D_iqfdn")
+debug_color = Color(0, 0.6, 0.701961, 0.0470588)
+
 [connection signal="timeout" from="AI/MoveComponent/Timer" to="AI/MoveComponent" method="_on_timer_timeout"]
+
+[editable path="Hibox"]
+[editable path="hurtbox"]

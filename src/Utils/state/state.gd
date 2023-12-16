@@ -6,7 +6,7 @@ var animations: AnimationPlayer
 var move_component 
 var parent: CharacterBody2D
 var sprite: AnimatedSprite2D
-
+var target_manager
 
 @export var animation_name :String
 

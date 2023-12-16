@@ -1,5 +1,5 @@
 extends Node
-class_name  MoveComponent
+
 
 var nav_agent
 var player

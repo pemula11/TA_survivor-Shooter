@@ -16,6 +16,8 @@ var current_weapon
 
 @onready var bullet_container
 
+var knockback = Vector2.ZERO
+var knockback_force = 80
 
 func _ready():
 	bullet_container = get_node("%BulletContainer")
@@ -70,3 +72,9 @@ func _unhandled_input(event):
 	
 func set_state(state):
 	label.text = str(state)
+
+
+func _on_hurtbox_area_entered(area):
+	var source = area.get_parent()
+	var dir = global_position.direction_to(source.global_position)
+	knockback = dir * -1

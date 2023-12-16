@@ -14,7 +14,7 @@ func enter() -> void:
 	
 func physics_update(delta):
 	
-	if  check_has_target() == false:
+	if  target_manager.is_detect_player() == false:
 		Transitioned.emit(self,"idle")
 		move_component.move_and_slide_navigation(Vector2.ZERO)
 		return

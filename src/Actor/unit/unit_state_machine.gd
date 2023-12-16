@@ -1,5 +1,5 @@
 extends Node
-class_name Character_State_Machine
+
 
 var states : Dictionary = {}
 var current_state : State
@@ -17,7 +17,7 @@ func init(parent, animation, movement, sprite):
 			child.animations = animation
 			child.move_component = movement
 			child.SPEED = parent.SPEED
-			
+			child.target_manager = parent.target_manager
 			
 	
 	if initial_state:

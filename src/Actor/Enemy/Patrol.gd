@@ -14,6 +14,6 @@ func physics_update(delta):
 	if move_component.check_navigation_finished():
 			Transitioned.emit(self,"idle")
 	if  check_has_target() == true and !move_component.distance_from_origin():
-				Transitioned.emit(self,"chase")
+		Transitioned.emit(self,"chase")
 	move_component.move_and_slide_navigation(movement_input * SPEED)
 

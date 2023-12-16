@@ -5,7 +5,7 @@
 
 [node name="Pistol" instance=ExtResource("1_r3ayj")]
 weapon_name = "pistol"
-BULLET_SPEED = 200.0
+BULLET_SPEED = 500.0
 SHOOT_RAGE = 800.0
 BULLETS = 2
 slot = 8
