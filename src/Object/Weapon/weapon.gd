@@ -110,7 +110,8 @@ func shot():
 			var target = (get_global_mouse_position()- post).normalized()
 			bullet_instance.init(null, target, DAMAGE, shot_position.global_position, BULLET_SPEED, 
 								KNOCKBACK, 20)
-			bullet_container.add_child(bullet_instance)
+			#bullet_container.add_child(bullet_instance)
+			SignalManager.emit_signal("shoot_target", bullet_instance)
 			interval_bullet.start()
 			await interval_bullet.timeout
 			slot -= 1

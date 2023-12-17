@@ -15,8 +15,8 @@ var direction := Vector2.ZERO
 
 var velocity
 
-func init(owner, directions, damage, pos, speed, knockback, max_distances):
-	owner_bullet = owner
+func init(owners, directions, damage, pos, speed, knockback, max_distances):
+	owner_bullet = owners
 	direction = directions
 	position = pos
 	DAMAGE = damage
@@ -45,7 +45,7 @@ func _process(delta):
 
 
 func _on_body_entered(body):
-	if body.is_in_group('enemy'):
+	if body and body != owner_bullet:
 		print("hit")
 	
-	queue_free()
+		queue_free()

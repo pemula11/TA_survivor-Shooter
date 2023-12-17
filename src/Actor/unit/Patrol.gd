@@ -11,9 +11,11 @@ func enter() -> void:
 func physics_update(delta):
 	
 	var movement_input = get_movement_input()
-	if target_manager.is_detect_player():
+	if move_component.check_navigation_finished() == true:
 			Transitioned.emit(self,"idle")
 	if  target_manager.is_detect_player() == true and !move_component.distance_from_origin():
 		Transitioned.emit(self,"chase")
+	
+	
 	move_component.move_and_slide_navigation(movement_input * SPEED)
 

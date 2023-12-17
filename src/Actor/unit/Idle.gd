@@ -19,8 +19,8 @@ func physics_update(delta):
 		if  target_manager.is_detect_player() == true and !move_component.distance_from_origin():
 			Transitioned.emit(self,"chase")
 			return
-	
-	
+	if target_manager.can_shoot_target() == true:
+		Transitioned.emit(self,"shoot")
 	
 	
 	parent.velocity = parent.knockback * SPEED 

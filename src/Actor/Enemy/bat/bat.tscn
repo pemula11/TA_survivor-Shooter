@@ -136,8 +136,7 @@ sprite_frames = SubResource("SpriteFrames_itd80")
 [node name="Idle" parent="StateMachine" index="0"]
 animation_name = "fly"
 
-[node name="Chase" parent="StateMachine" index="1" node_paths=PackedStringArray("target_manager")]
-target_manager = NodePath("../../AI/TargetDetector")
+[node name="Chase" parent="StateMachine" index="1"]
 animation_name = "fly"
 
 [node name="Patrol" type="Node" parent="StateMachine" index="2"]
@@ -149,9 +148,6 @@ _state_name = "patrol"
 script = ExtResource("3_og1pi")
 animation_name = "fly"
 _state_name = "retreat"
-
-[node name="MoveComponent" parent="AI" index="0" node_paths=PackedStringArray("los")]
-los = NodePath("../../LineOfSight")
 
 [node name="NavigationAgent2D" parent="." index="4"]
 radius = 16.0

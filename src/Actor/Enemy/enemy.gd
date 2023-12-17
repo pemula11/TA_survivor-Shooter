@@ -27,7 +27,7 @@ func _ready():
 	state_machine.init(self,animation_player, move_component,sprite)
 	line_of_sight.target_position.x = max_target_seen
 #	target_detector.target_position.x = max_target_seen
-	target_manager.init(self,target_detector)
+	#target_manager.init(self,target_detector, max_target_seen)
 
 func _physics_process(delta):
 	line_of_sight.look_at(player.global_position)

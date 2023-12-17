@@ -4,11 +4,14 @@ extends Node
 var nav_agent
 var player
 var parent
-@export var los : RayCast2D
+@export var target_Detector : RayCast2D
 var player_spotted : bool
 @onready var timer = $Timer
 var max_patrol
 var origin_position
+@onready var target_manager = $"../TargetManager"
+@onready var line_of_sight = $"../../LineOfSight"
+
 
 
 func init(nav, target, parents, patrol, origin):
@@ -35,7 +38,7 @@ func make_path():
 	if distance_from_origin() == true:
 		nav_agent.target_position = origin_position
 		return
-	if check_collider_sight() == true:
+	if target_manager.is_detect_player() == true:
 		nav_agent.target_position = player.global_position
 	
 	
@@ -49,17 +52,11 @@ func direction_animation():
 	var pos = (nav_agent.get_next_path_position() - parent.global_position).normalized()
 	if pos.x < 0:
 		parent.sprite.flip_h = true
+		line_of_sight.scale.x = -1
 	elif pos.x > 0:
 		parent.sprite.flip_h = false
-
-func check_collider_sight():
-	if los.is_colliding():
-		
-		var collider = los.get_collider()
-		if collider and collider.is_in_group("player"):
-			
-			return true
-	return false
+		line_of_sight.scale.x = 1
+	
 
 func check_navigation_finished():
 	return nav_agent.is_navigation_finished()
@@ -73,6 +70,7 @@ func go_to_origin():
 	return parent.global_position.distance_to(origin_position)
 
 func move_and_slide_navigation(velocity):
+	
 	nav_agent.set_velocity(velocity)
 
 func back_to_origin():
@@ -82,5 +80,6 @@ func set_idle_target():
 	nav_agent.target_position = nav_agent.target_position
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
+	
 	parent.velocity = safe_velocity
 	parent.move_and_slide()

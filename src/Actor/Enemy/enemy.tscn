@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dvf8payshbe77"]
+[gd_scene load_steps=28 format=3 uid="uid://dvf8payshbe77"]
 
 [ext_resource type="PackedScene" uid="uid://blu1pprn7m7tw" path="res://src/Actor/actor.tscn" id="1_6bkwe"]
 [ext_resource type="Script" path="res://src/Actor/Enemy/enemy.gd" id="2_b8aly"]
@@ -20,7 +20,6 @@
 [ext_resource type="Script" path="res://src/Actor/Player/Idle.gd" id="18_xwt5s"]
 [ext_resource type="Script" path="res://src/Actor/Enemy/Chase.gd" id="20_qmmwg"]
 [ext_resource type="Script" path="res://src/Actor/Enemy/EnemyMoveComponent.gd" id="20_wwyrh"]
-[ext_resource type="Script" path="res://src/Actor/Enemy/TargetDetector.gd" id="21_p6glv"]
 [ext_resource type="PackedScene" uid="uid://bjgpjj6m73twf" path="res://src/Actor/misc/hibox.tscn" id="22_c88ne"]
 [ext_resource type="PackedScene" uid="uid://icst6s0xk2el" path="res://src/Actor/misc/hurtbox.tscn" id="23_0oqr6"]
 
@@ -125,16 +124,15 @@ _state_name = "chase"
 
 [node name="AI" type="Node" parent="." index="3"]
 
-[node name="MoveComponent" type="Node" parent="AI" index="0"]
+[node name="MoveComponent" type="Node" parent="AI" index="0" node_paths=PackedStringArray("los")]
 script = ExtResource("20_wwyrh")
+los = NodePath("../../LineOfSight")
 
 [node name="Timer" type="Timer" parent="AI/MoveComponent" index="0"]
 wait_time = 0.5
 autostart = true
 
-[node name="TargetManager" type="Node" parent="AI" index="1" node_paths=PackedStringArray("target_detector")]
-script = ExtResource("21_p6glv")
-target_detector = NodePath("")
+[node name="TargetManager" type="Node" parent="AI" index="1"]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="4"]
 path_postprocessing = 1

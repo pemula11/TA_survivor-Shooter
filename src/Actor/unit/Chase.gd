@@ -14,14 +14,22 @@ func enter() -> void:
 	
 func physics_update(delta):
 	
-	if  target_manager.is_detect_player() == false:
-		Transitioned.emit(self,"idle")
+	#if  target_manager.is_detect_player() == false:
+		#Transitioned.emit(self,"idle")
+		#move_component.move_and_slide_navigation(Vector2.ZERO)
+		#return
+	if target_manager.can_shoot_target() == true:
+		print("shhot")
 		move_component.move_and_slide_navigation(Vector2.ZERO)
+		Transitioned.emit(self,"shot")
 		return
+	if  move_component.check_navigation_finished() == true:
+		Transitioned.emit(self,"idle")
 	var movement_input = get_movement_input()
 	
 	if move_component.distance_from_origin() == true :
 		Transitioned.emit(self,"retreat")
+	
 	
 	#if target_manager.detect_player():
 		#Transitioned.emit(self,"attack")
