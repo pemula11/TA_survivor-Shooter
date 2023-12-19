@@ -2,7 +2,7 @@ extends State
 
 @export var bullet :PackedScene
 @export var shot_position : Marker2D
-@onready var timer = $Timer
+@export var timer : Timer 
 
 
 
@@ -20,9 +20,11 @@ func enter() -> void:
 	SignalManager.emit_signal("shoot_target", bullet_instance)
 	timer.start()
 	await timer.timeout
-	Transitioned.emit(self,"idle")
+	Transitioned.emit(self,"chase")
 	
 func physics_update(delta):
 	
-	pass
+	parent.velocity = parent.knockback * SPEED 
+	parent.move_and_slide()
+	parent.knockback = lerp(parent.knockback, Vector2.ZERO, 0.2)
 

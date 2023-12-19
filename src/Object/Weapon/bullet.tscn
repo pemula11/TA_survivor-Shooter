@@ -8,8 +8,9 @@ radius = 4.12311
 
 [node name="bullet" type="Area2D"]
 collision_layer = 16
-collision_mask = 15
+collision_mask = 73
 script = ExtResource("1_66jlg")
+KNOCKBACK_FORCE = 2
 
 [node name="Muzzle" type="Sprite2D" parent="."]
 position = Vector2(-4.76837e-07, 0)
@@ -19,4 +20,5 @@ texture = ExtResource("2_o16ik")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ro4ql")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

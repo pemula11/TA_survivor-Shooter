@@ -56,3 +56,7 @@ func on_child_transition(state, new_state_name):
 	
 	
 	
+
+
+func _on_health_component_health_deplend():
+	on_child_transition(current_state, "die")

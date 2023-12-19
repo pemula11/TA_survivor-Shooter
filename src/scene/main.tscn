@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cawi4yusi2qio"]
+[gd_scene load_steps=14 format=3 uid="uid://cawi4yusi2qio"]
 
 [ext_resource type="Script" path="res://src/Utils/TileMap.gd" id="2_ds4b6"]
 [ext_resource type="PackedScene" uid="uid://dgykravybnq6o" path="res://src/Actor/Player/Players.tscn" id="3_fxstc"]
 [ext_resource type="Script" path="res://src/Utils/BulletContainer.gd" id="3_juomo"]
 [ext_resource type="Texture2D" uid="uid://c26shsekma36j" path="res://asset/tileset x1.png" id="4_p7gyu"]
 [ext_resource type="PackedScene" uid="uid://cwqbqwmmxeylp" path="res://src/Actor/unit/teamable_unit.tscn" id="5_vtti7"]
+[ext_resource type="PackedScene" uid="uid://ce42on1wb5h0q" path="res://src/Actor/Enemy/bat/bat.tscn" id="6_3xidr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_882ns"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -883,6 +884,18 @@ position = Vector2(76, 131)
 
 [node name="unit" parent="UnitContainer" instance=ExtResource("5_vtti7")]
 position = Vector2(176, 69)
+
+[node name="unit2" parent="UnitContainer" instance=ExtResource("5_vtti7")]
+position = Vector2(242, 165)
+
+[node name="unit3" parent="UnitContainer" instance=ExtResource("5_vtti7")]
+position = Vector2(256, 35)
+
+[node name="unit4" parent="UnitContainer" instance=ExtResource("5_vtti7")]
+position = Vector2(590, 165)
+
+[node name="Bat" parent="UnitContainer" instance=ExtResource("6_3xidr")]
+position = Vector2(431, 92)
 
 [node name="PatrolContainer" type="Node2D" parent="."]
 

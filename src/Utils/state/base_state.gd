@@ -9,11 +9,11 @@ func process_input(event: InputEvent):
 	pass
 
 func enter():
-	print("changed : %s" % _state_name)
+	pass
 	
 
 func exit():
-	print("exit")
+	pass
 
 func update(delta):
 	pass

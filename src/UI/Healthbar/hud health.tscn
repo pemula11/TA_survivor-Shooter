@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4kxocntjg8hi"]
+
+[ext_resource type="Texture2D" uid="uid://dbnxko2wqe0w1" path="res://asset/HUD/Player Lifebar/0.png" id="1_y4tpm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxsv3"]
+bg_color = Color(0.929412, 0.14902, 0, 1)
+
+[node name="TextureRect" type="TextureRect"]
+offset_left = 25.0
+offset_top = 16.0
+offset_right = 110.0
+offset_bottom = 37.0
+texture = ExtResource("1_y4tpm")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 19.0
+offset_top = 5.0
+offset_right = 79.0
+offset_bottom = 15.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_lxsv3")
+value = 50.0
+show_percentage = false

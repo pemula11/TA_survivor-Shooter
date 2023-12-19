@@ -8,6 +8,7 @@ weapon_name = "pistol"
 BULLET_SPEED = 500.0
 SHOOT_RAGE = 800.0
 BULLETS = 2
+DAMAGE = 20
 slot = 8
 max_slot = 8
 ammo = 50

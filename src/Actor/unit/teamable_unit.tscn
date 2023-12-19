@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://cwqbqwmmxeylp"]
+[gd_scene load_steps=55 format=3 uid="uid://cwqbqwmmxeylp"]
 
 [ext_resource type="PackedScene" uid="uid://blu1pprn7m7tw" path="res://src/Actor/actor.tscn" id="1_75pvr"]
 [ext_resource type="Texture2D" uid="uid://dpu3o77t6dwv0" path="res://asset/Enemies/No Outlines/enemies x1.png" id="2_m3ea4"]
@@ -14,8 +14,11 @@
 [ext_resource type="Script" path="res://src/Actor/unit/Patrol.gd" id="8_3yvw2"]
 [ext_resource type="Script" path="res://src/Actor/unit/Retreat.gd" id="9_1mk3n"]
 [ext_resource type="Script" path="res://src/Actor/unit/Shot.gd" id="10_qr8nq"]
-[ext_resource type="PackedScene" uid="uid://r5ejt1scfovy" path="res://src/Object/Weapon/bullet.tscn" id="11_2xfjr"]
+[ext_resource type="PackedScene" uid="uid://clk0epw5drdsl" path="res://src/Object/Weapon/green_bullet.tscn" id="11_bdvid"]
+[ext_resource type="Script" path="res://src/Actor/unit/Die.gd" id="12_hyyrr"]
 [ext_resource type="Script" path="res://src/Utils/LineOfSight.gd" id="14_1bhr7"]
+[ext_resource type="PackedScene" uid="uid://dexhf5rt4lmdn" path="res://src/Utils/component/health_component.tscn" id="17_f2l8j"]
+[ext_resource type="PackedScene" uid="uid://c58by3o2gqv7p" path="res://src/UI/Healthbar/heathbar.tscn" id="19_ovaka"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wryvu"]
 
@@ -237,6 +240,48 @@ tracks/1/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_knwby"]
+resource_name = "die"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dead"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_eevpq"]
 resource_name = "idle"
 length = 0.9
@@ -327,6 +372,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ol31h"]
 _data = {
 "RESET": SubResource("Animation_rwyal"),
+"die": SubResource("Animation_knwby"),
 "idle": SubResource("Animation_eevpq"),
 "shot": SubResource("Animation_0aq3v"),
 "walk": SubResource("Animation_3kkik")
@@ -335,7 +381,8 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_prnl8"]
 radius = 13.04
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5vgvh"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ncjna"]
+size = Vector2(20, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kupit"]
 size = Vector2(400, 500)
@@ -357,7 +404,6 @@ position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_wryvu")
 
 [node name="shot_position" type="Marker2D" parent="." index="1"]
-position = Vector2(4, 3)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="2"]
 position = Vector2(-2.15616, 0.949441)
@@ -394,14 +440,20 @@ script = ExtResource("9_1mk3n")
 animation_name = "walk"
 _state_name = "retreat"
 
-[node name="Shot" type="Node" parent="StateMachine" index="4" node_paths=PackedStringArray("shot_position")]
+[node name="Shot" type="Node" parent="StateMachine" index="4" node_paths=PackedStringArray("shot_position", "timer")]
 script = ExtResource("10_qr8nq")
-bullet = ExtResource("11_2xfjr")
+bullet = ExtResource("11_bdvid")
 shot_position = NodePath("../../shot_position")
+timer = NodePath("Timer")
 animation_name = "shot"
 _state_name = "shoot"
 
 [node name="Timer" type="Timer" parent="StateMachine/Shot" index="0"]
+
+[node name="Die" type="Node" parent="StateMachine" index="5"]
+script = ExtResource("12_hyyrr")
+animation_name = "die"
+_state_name = "die"
 
 [node name="AI" type="Node" parent="." index="5"]
 
@@ -441,6 +493,7 @@ offset_right = 22.0
 offset_bottom = -21.0
 text = "idle"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Hibox" parent="." index="10" instance=ExtResource("6_5frvs")]
 visible = false
@@ -451,14 +504,15 @@ collision_mask = 0
 position = Vector2(-2, -5)
 shape = SubResource("CircleShape2D_prnl8")
 
-[node name="hurtbox" parent="." index="11" instance=ExtResource("7_4lpyt")]
-visible = false
+[node name="hurtbox" parent="." index="11" node_paths=PackedStringArray("health_component", "actor") instance=ExtResource("7_4lpyt")]
 collision_layer = 64
 collision_mask = 0
+health_component = NodePath("../HealthComponent")
+actor = NodePath("..")
 
 [node name="CollisionShape2D" parent="hurtbox" index="0"]
-position = Vector2(-1, -5)
-shape = SubResource("CircleShape2D_5vgvh")
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_ncjna")
 
 [node name="LineOfSight" type="Area2D" parent="." index="12"]
 collision_layer = 0
@@ -470,8 +524,21 @@ position = Vector2(89, 1)
 shape = SubResource("RectangleShape2D_kupit")
 debug_color = Color(0, 0.6, 0.701961, 0.0470588)
 
+[node name="HealthComponent" parent="." index="13" instance=ExtResource("17_f2l8j")]
+health = 100
+max_health = 100
+
+[node name="heathbar" parent="." index="14" node_paths=PackedStringArray("healthcomponent") instance=ExtResource("19_ovaka")]
+offset_left = -12.0
+offset_top = -23.0
+offset_right = 36.0
+offset_bottom = -8.0
+healthcomponent = NodePath("../HealthComponent")
+metadata/_edit_use_anchors_ = true
+
 [connection signal="timeout" from="AI/MoveComponent/Timer" to="AI/MoveComponent" method="_on_timer_timeout"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="AI/MoveComponent" method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="health_deplend" from="HealthComponent" to="StateMachine" method="_on_health_component_health_deplend"]
 
 [editable path="Hibox"]
 [editable path="hurtbox"]

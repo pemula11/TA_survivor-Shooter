@@ -14,5 +14,7 @@ func physics_update(delta):
 			Transitioned.emit(self,"idle")
 	if target_manager.can_shoot_target() == true:
 		Transitioned.emit(self,"shoot")
-	move_component.move_and_slide_navigation(movement_input * SPEED)
+	
+	move_component.move_and_slide_navigation((movement_input+parent.knockback )* SPEED)
+	parent.knockback = lerp(parent.knockback, Vector2.ZERO, 0.2)
 	

@@ -15,5 +15,6 @@ func physics_update(delta):
 			Transitioned.emit(self,"idle")
 	if  check_has_target() == true and !move_component.distance_from_origin():
 		Transitioned.emit(self,"chase")
-	move_component.move_and_slide_navigation(movement_input * SPEED)
+	move_component.move_and_slide_navigation((movement_input+parent.knockback )* SPEED)
+	parent.knockback = lerp(parent.knockback, Vector2.ZERO, 0.2)
 

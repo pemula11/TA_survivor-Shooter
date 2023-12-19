@@ -3,7 +3,7 @@ class_name Actor
 
 @export var max_hp : int
 @export var SPEED : float
-
+@export var can_knockback : bool = true
 
 
 # Called when the node enters the scene tree for the first time.

@@ -73,8 +73,8 @@ func _unhandled_input(event):
 func set_state(state):
 	label.text = str(state)
 
-
-func _on_hurtbox_area_entered(area):
-	var source = area.get_parent()
-	var dir = global_position.direction_to(source.global_position)
-	knockback = dir * -1
+#
+#func _on_hurtbox_area_entered(area):
+	#var source = area.get_parent()
+	#var dir = global_position.direction_to(source.global_position)
+	#knockback = dir * -1

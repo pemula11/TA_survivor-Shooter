@@ -25,7 +25,8 @@ func physics_update(delta):
 	
 	#if target_manager.detect_player():
 		#Transitioned.emit(self,"attack")
-	move_component.move_and_slide_navigation(movement_input * SPEED)
+	move_component.move_and_slide_navigation((movement_input+parent.knockback )* SPEED)
+	parent.knockback = lerp(parent.knockback, Vector2.ZERO, 0.2)
 	
 
 func exit():

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c58by3o2gqv7p"]
+
+[ext_resource type="Texture2D" uid="uid://c8w3bw71oy6p8" path="res://asset/HUD/Player Lifebar/1.png" id="1_bi0vy"]
+[ext_resource type="Script" path="res://src/UI/Healthbar/heathbar.gd" id="2_tms0g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yw1fi"]
+bg_color = Color(0.992157, 0, 0.141176, 1)
+
+[node name="heathbar" type="TextureRect"]
+offset_right = 48.0
+offset_bottom = 15.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_bi0vy")
+script = ExtResource("2_tms0g")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 42.0
+offset_bottom = 9.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_yw1fi")
+step = 1.0
+value = 100.0
+show_percentage = false

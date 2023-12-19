@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ce42on1wb5h0q"]
+[gd_scene load_steps=16 format=3 uid="uid://ce42on1wb5h0q"]
 
 [ext_resource type="PackedScene" uid="uid://dvf8payshbe77" path="res://src/Actor/Enemy/enemy.tscn" id="1_ou5rq"]
 [ext_resource type="Texture2D" uid="uid://ctx6pnpaha7gy" path="res://asset/character/enemy 2/fly_0.png" id="2_k7iyq"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ct3h05x8s2jd4" path="res://asset/character/enemy 2/fly_4.png" id="6_2klhl"]
 [ext_resource type="Texture2D" uid="uid://ccy1wrumabpaj" path="res://asset/character/enemy 2/fly_5.png" id="7_6tt2s"]
 [ext_resource type="Script" path="res://src/Actor/Enemy/Patrol.gd" id="8_bc4md"]
+[ext_resource type="PackedScene" uid="uid://dexhf5rt4lmdn" path="res://src/Utils/component/health_component.tscn" id="10_53k4a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yt6qv"]
 
@@ -125,6 +126,7 @@ _data = {
 
 [node name="Bat" instance=ExtResource("1_ou5rq")]
 max_patrol = 400
+SPEED = 50.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(-1, -6)
@@ -156,6 +158,17 @@ radius = 16.0
 libraries = {
 "": SubResource("AnimationLibrary_5710j")
 }
+
+[node name="Hibox" parent="." index="8" node_paths=PackedStringArray("actor")]
+collision_layer = 0
+collision_mask = 32
+actor = NodePath("..")
+
+[node name="hurtbox" parent="." index="9" node_paths=PackedStringArray("health_component", "actor")]
+health_component = NodePath("../HealthComponent")
+actor = NodePath("..")
+
+[node name="HealthComponent" parent="." index="11" instance=ExtResource("10_53k4a")]
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="AI/MoveComponent" method="_on_navigation_agent_2d_velocity_computed"]
 

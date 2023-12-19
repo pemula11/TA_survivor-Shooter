@@ -7,7 +7,7 @@ var ACCELL = 10
 @export  var SPEED :float = 500
 @export  var push_force :float = 80
 @export var owner_bullet : CharacterBody2D
-@export var KNOCKBACK = 0
+@export var KNOCKBACK_FORCE = 1
 var max_distance = 400
 var origin
 
@@ -20,7 +20,7 @@ func init(owners, directions, damage, pos, speed, knockback, max_distances):
 	direction = directions
 	position = pos
 	DAMAGE = damage
-	KNOCKBACK = knockback
+	#KNOCKBACK_FORCE = knockback
 	max_distance = max_distances
 	origin = pos
 	
@@ -37,15 +37,15 @@ func _physics_process(delta):
 		queue_free()
 	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
-
 
 func _on_body_entered(body):
-	if body and body != owner_bullet:
-		print("hit")
+	
+		queue_free()
+
+
+func _on_area_entered(area):
+	if area and area.has_method("take_damage"):
+		var knockback_dir = global_position.direction_to(area.global_position)
+		area.take_damage(DAMAGE, knockback_dir*KNOCKBACK_FORCE)
 	
 		queue_free()
